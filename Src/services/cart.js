@@ -21,7 +21,7 @@ export async function addItemToCart(userCart, item){
 export async function showCartItens(userCart){
     userCart.forEach(userCart => {
         console.log(`\n no seu carrinho: ${userCart.Name} | QTD: ${userCart.Quantity} 
-        | subtotal: ${userCart.TotalItemPrice()}`)
+        | preço unitário: ${userCart.Price} | subtotal: ${userCart.TotalItemPrice()}`)
     })
 }
 
@@ -37,9 +37,8 @@ export async function deleteItem(userCart, item, quantity) {
     userCart[index].Quantity -= quantity
 }
 
-export async function removeItem(userCart, item) {
-    const index = userCart.findIndex((value) => value.Name === item.Name)
-    console.log(`\n ❗❗ Removendo ${item.Name} do carrinho ❗❗`)
+export async function removeItem(userCart, index) {
+    console.log(`\n ❗❗ Removendo ${userCart[index].Name} do carrinho ❗❗`)
     userCart.splice(index,1)
 }
 
