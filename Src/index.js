@@ -3,7 +3,7 @@ import *  as cartServices from "./services/cart.js"
 
 const user = []
 
-console.log("====== Hello and welcome to your ShopeeCart 🛒😃 ====== \n")
+console.log("====== Hello and welcome to your ShopeeCart 🛒😃 ======")
 
 
 const item  = await createItem(1, "suspicious Eletronic", 18.71, 3)
@@ -16,9 +16,9 @@ await cartServices.addItemToCart(user, item3)
 
 await cartServices.showCartItens(user)
 
-await cartServices.deleteItem(user, item3, 2)
+await cartServices.updateItem(user, 2, 3)
 
-await cartServices.removeItem(user, 0)
+// await cartServices.removeItem(user, 0)
 
 await cartServices.showCartItens(user)
 

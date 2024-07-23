@@ -4,10 +4,10 @@ export class item {
         this.Name = name
         this.Price = price
         this.Quantity = quantity
+    }
         
-        
-        this.TotalItemPrice = () => {
+        getTotalItemPrice = () => {
             return this.Quantity * this.Price
         } 
-    }
+    
 }

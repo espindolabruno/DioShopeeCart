@@ -1,40 +1,50 @@
 
-//Cart.js is responsile for manage all the functionality of a ShopeeCart
-//those responsibilities are:
-// show itens and her quantities
-// show unit prices
-// show total item price
-// show total cart price
-// remove an unit 
-// exclude an item
-// check out (buy all item in cart)
+//Cart.js is responsible for manage all the functionality of a ShopeeCart
+//these responsibilities are:
+// show itens and her quantities 👌
+// show unit prices 👌
+// show total item price 👌
+// show total cart price 👌
+// remove an unit 👌
+// remove an item 👌
 
 export async function addItemToCart(userCart, item){
 
     if(item.Name === undefined)
         return
-
-    console.log(`Adicionando ${item.Quantity} do item "${item.Name}"`)
     userCart.push(item);
 }
 
 export async function showCartItens(userCart){
+
     userCart.forEach(userCart => {
         console.log(`\n no seu carrinho: ${userCart.Name} | QTD: ${userCart.Quantity} 
-        | preço unitário: ${userCart.Price} | subtotal: ${userCart.TotalItemPrice()}`)
+        | preço unitário: ${userCart.Price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} | subtotal: ${userCart.getTotalItemPrice().toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`)
     })
 }
+/**
+ * updates the quantity for an item in the user cart
+ * if the final quantity is lower than 0 it will remove it from the cart
+ * 
+ * @param {Array} userCart - userCart an array of item
+ * @param {Number} index - the index to search in userCart starting on 0
+ * @param {Number} quantity - the quantity to change in the userCart
+ * @returns 
+ */
+export async function updateItem(userCart, index, quantity) {
 
-export async function deleteItem(userCart, item, quantity) {
-    const index =  userCart.findIndex((value) => value.Name === item.Name)
-    
-    if(userCart[index].Quantity - quantity <= 0) {
-        removeItem(userCart, item)
+    if(index < 0 || index >= userCart.length) {
+        console.log(`\n 😿 Index inválido, não deu pra alterar o item`)
+        return 
+    }
+
+    if((quantity < 0) || (userCart[index].Quantity - quantity <= 0)) {
+        removeItem(userCart, index)
         return
     }
     
-    console.log(`\n 🗑 Diminuindo ${quantity} do item ${item.Name}`)
-    userCart[index].Quantity -= quantity
+    console.log(`\n 💱 alterando de ${userCart[index].Quantity} para ${quantity} o item ${userCart[index].Name}`)
+    userCart[index].Quantity = quantity
 }
 
 export async function removeItem(userCart, index) {
@@ -43,7 +53,8 @@ export async function removeItem(userCart, index) {
 }
 
 export async function calculateTotalCartPrice(userCart) {
-    const result =  userCart.reduce((total, item) => total + item.TotalItemPrice(), 0 ) 
+    let result =  userCart.reduce((total, item) => total + item.getTotalItemPrice(), 0 )
+    result = result.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     console.log(`\n ==================================`)
     console.log(`🔴 Preço total 🛒 | ${result}`)
     return result
